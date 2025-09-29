@@ -24,6 +24,12 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DCONFIG_VERSION=\\\"2021-03-27\\\"")
 find_library(log-lib log)
 target_link_libraries(fastdev_quickjs_runtime ${log-lib})
 
+target_link_options(fastdev_quickjs_runtime PRIVATE "-Wl,-z,common-page-size=65536" "-Wl,-z,max-page-size=65536")
+
+set(CMAKE_SHARED_LINKER_FLAGS
+        "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-z,common-page-size=65536 -Wl,-z,max-page-size=65536"
+)
+
 if(MSVC)
     # https://github.com/ekibun/flutter_qjs/issues/7
     target_compile_options(fastdev_quickjs_runtime PRIVATE "/Oi-")
